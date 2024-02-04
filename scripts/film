@@ -1,0 +1,12 @@
+#!/bin/bash
+
+OUTDIR='./output'
+FRAMERATE=30
+
+[[ ! -d $OUTDIR ]] && mkdir $OUTDIR
+[[ -f out.mp4 ]] && rm out.mp4
+
+ffmpeg -framerate $FRAMERATE -pattern_type glob -i "$OUTDIR/*.png" \
+  -c:v libx264 -pix_fmt yuv420p out.mp4
+
+find $OUTDIR -name '*.png' -exec rm {} \;
